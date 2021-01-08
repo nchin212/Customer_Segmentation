@@ -21,7 +21,7 @@
 The data is a transnational data set which contains all the transactions occurring between 01/12/2010 and 09/12/2011 for a UK-based and registered non-store online retail. It consists of 541909 rows and 8 columns and its details are shown below:
 
 | Variable    | Description                                                                                                                                                 |
-|-------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|:------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | InvoiceNo   | Invoice number. Nominal, a 6-digit integral number uniquely assigned to each transaction. If this code starts with letter 'C', it indicates a cancellation. |
 | StockCode   | Product (item) code. Nominal, a 5-digit integral number uniquely assigned to each distinct product.                                                         |
 | Description | Product (item) name. Nominal.                                                                                                                               |
