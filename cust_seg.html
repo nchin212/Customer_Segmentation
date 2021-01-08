@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>Customer Segmentation</title>
+<title>cust_seg</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13106,7 +13106,49 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The data contains various items purchased by various customers across 38 countries. It consists of 541909 rows and 8 columns, which are 'InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate', 'UnitPrice', 'CustomerID' and 'Country'.</p>
+<p>The data is taken from the UCI Machine Learning Repository and can be downloaded <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/00352/Online%20Retail.xlsx">here</a>. The data is a transnational data set which contains all the transactions occurring between 01/12/2010 and 09/12/2011 for a UK-based and registered non-store online retail. It consists of 541909 rows and 8 columns and its details are shown below:</p>
+<table>
+<thead><tr>
+<th>Variable</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>InvoiceNo</td>
+<td style="text-align:left">Invoice number. Nominal, a 6-digit integral number uniquely assigned to each transaction. If this code starts with letter 'C', it indicates a cancellation.</td>
+</tr>
+<tr>
+<td>StockCode</td>
+<td style="text-align:left">Product (item) code. Nominal, a 5-digit integral number uniquely assigned to each distinct product.</td>
+</tr>
+<tr>
+<td>Description</td>
+<td style="text-align:left">Product (item) name. Nominal.</td>
+</tr>
+<tr>
+<td>Quantity</td>
+<td style="text-align:left">The quantities of each product (item) per transaction. Numeric.</td>
+</tr>
+<tr>
+<td>InvoiceDate</td>
+<td style="text-align:left">Invoice Date and time. Numeric, the day and time when each transaction was generated.</td>
+</tr>
+<tr>
+<td>UnitPrice</td>
+<td style="text-align:left">Unit price. Numeric, Product price per unit in sterling.</td>
+</tr>
+<tr>
+<td>CustomerID</td>
+<td style="text-align:left">Customer number. Nominal, a 5-digit integral number uniquely assigned to each customer.</td>
+</tr>
+<tr>
+<td>Country</td>
+<td style="text-align:left">Country name. Nominal, the name of the country where each customer resides.    </td>
+</tr>
+</tbody>
+</table>
+<p>More details on the data can be seen <a href="https://archive.ics.uci.edu/ml/datasets/online+retail#">here</a>.</p>
 
 </div>
 </div>
