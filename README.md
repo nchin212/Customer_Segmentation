@@ -88,6 +88,8 @@ Decided to separate the 3 different groups as follows:
 - **Middle spending customers**: Middle recency, middle frequency, middle monetary
 - **Large spending customers**: Low recency, High frequency, High monetary
 
-## Jupyter Notebook
+## Relevant Links
 
-https://nchin212.github.io/Customer_Segmentation/cust_seg.html
+**Jupyter Notebook :** https://nchin212.github.io/Customer_Segmentation/cust_seg.html
+
+**Portfolio :** https://nchin212.github.io/post/customer_segmentation/
