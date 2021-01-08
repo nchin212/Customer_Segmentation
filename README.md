@@ -3,6 +3,7 @@
 ## Overview
 
 - Used recency, frequency and monetary (RFM) to analyse customer purchases from the United Kingdom
+- Used elbow plot to determine suitable number of clusters
 - Applied k-means clustering to segment the customers into 3 different groups:
   - Small spending customers
   - Middle spending customers
