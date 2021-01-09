@@ -41,15 +41,6 @@ The following was done to clean up the data:
 - Converted `CustomerID` and `StockCode` to categorical, converted `InvoiceDate` to datetime object
 - Dropped `Country` column
 
-## Exploratory Data Analysis
-
-Checked the most purchased items and the invoice number which has the most number of unique items.
-
-Most Purchased Items          |  InvoiceNo with Most Unique Items
-:-------------------------:|:-------------------------:
-![alt text](https://github.com/nchin212/Customer_Segmentation/blob/gh-pages/plots/barplot1.png) |  ![alt text](https://github.com/nchin212/Customer_Segmentation/blob/gh-pages/plots/barplot2.png)
-
-
 ## Feature Engineering
 
 The following 2 columns was created:
@@ -57,6 +48,19 @@ The following 2 columns was created:
 **InvoiceDay** - Day of the invoice
 
 **TotalSum** - Total amount customer purchased for a particular item
+
+## Exploratory Data Analysis
+
+Most Purchased Items  |  
+:-------------------------:|
+![alt text](https://github.com/nchin212/Customer_Segmentation/blob/gh-pages/plots/bar1.png)
+
+
+Number of Customers over Time  |  Amount Spent over Time
+:-------------------------:|:-------------------------:
+![alt text](https://github.com/nchin212/Customer_Segmentation/blob/gh-pages/plots/line1.png) |  ![alt text](https://github.com/nchin212/Customer_Segmentation/blob/gh-pages/plots/line2.png)
+
+
 
 ## RFM
 
