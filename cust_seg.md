@@ -38,8 +38,6 @@ from sklearn.cluster import KMeans
 from mpl_toolkits.mplot3d import Axes3D
 
 %matplotlib inline
-
-
 ```
 
 Read in the input data, display its shape and observe its first few rows.
@@ -216,62 +214,24 @@ cus_f['InvoiceDate'] = pd.to_datetime(cus_f['InvoiceDate'])
 cus_f = cus_f.drop(['Country'], axis=1)
 ```
 
-
-## Exploratory Data Analysis
-
-Check the most purchased items.
-
-
-```python
-cus_f['Description'].value_counts().head().plot(kind='bar')
-```
-
-
-
-
-    <matplotlib.axes._subplots.AxesSubplot at 0x7fac7deab310>
-
-
-
-
-![png](plots/barplot1.png)
-
-
-Determine which invoice has most number of unique items.
-
-
-```python
-most_unique = cus_f.groupby('InvoiceNo')['Description'].nunique().sort_values(ascending = False)
-most_unique.head().plot(kind='bar')
-```
-
-
-
-
-    <matplotlib.axes._subplots.AxesSubplot at 0x7fac69100e80>
-
-
-
-
-![png](plots/barplot2.png)
-
-
-Determine the distribution of unit price.
-
-
-```python
-cus_f['UnitPrice'].plot(kind='box')
-```
-
-
-
-
-    <matplotlib.axes._subplots.AxesSubplot at 0x7fac6b2fd4f0>
-
-
-
-
-![png](plots/boxplot.png)
+    <ipython-input-7-2dffdd75e0fa>:1: SettingWithCopyWarning: 
+    A value is trying to be set on a copy of a slice from a DataFrame.
+    Try using .loc[row_indexer,col_indexer] = value instead
+    
+    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+      cus_f['CustomerID'] = pd.Categorical(cus_f['CustomerID'].astype(int))
+    <ipython-input-7-2dffdd75e0fa>:2: SettingWithCopyWarning: 
+    A value is trying to be set on a copy of a slice from a DataFrame.
+    Try using .loc[row_indexer,col_indexer] = value instead
+    
+    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+      cus_f['StockCode'] = pd.Categorical(cus_f['StockCode'])
+    <ipython-input-7-2dffdd75e0fa>:3: SettingWithCopyWarning: 
+    A value is trying to be set on a copy of a slice from a DataFrame.
+    Try using .loc[row_indexer,col_indexer] = value instead
+    
+    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+      cus_f['InvoiceDate'] = pd.to_datetime(cus_f['InvoiceDate'])
 
 
 ## Feature Engineering
@@ -280,14 +240,144 @@ The following 2 columns will be created:
 
 - **InvoiceDay** - Day of the invoice
 
-- **TotalSum** - Total amount customer purchased for a particular item
+- **TotalSum** - Total amount customer spent for a particular item
 
 
 ```python
 cus_f['InvoiceDay'] = cus_f.InvoiceDate.apply(lambda x: dt.datetime(x.year, x.month, x.day))
-ref_date = max(cus_f.InvoiceDay) + dt.timedelta(1)
 cus_f['TotalSum'] = cus_f.Quantity * cus_f.UnitPrice
 ```
+
+## Exploratory Data Analysis
+
+Check the most purchased items.
+
+
+```python
+ax = cus_f.groupby('Description')['Quantity'].sum().sort_values(ascending=False).head().plot(kind='bar',color='orange')
+ax.set_ylabel('Total Quantity')
+```
+
+
+
+
+    Text(0, 0.5, 'Total Quantity')
+
+
+
+
+![png](plots/bar.png)
+
+
+How many customers bought items over the year?
+
+
+```python
+ax = cus_f.groupby('InvoiceDay')['CustomerID'].nunique().plot(kind='line', color='blue')
+ax.set_ylabel('Number of Customers')
+```
+
+
+
+
+    Text(0, 0.5, 'Number of Customers')
+
+
+
+
+![png](plots/line1.png)
+
+
+There seems to be more customers purchasing items during the year end holiday season.
+
+How much was spent by customers over the year?
+
+
+```python
+ax = cus_f.groupby('InvoiceDay')['TotalSum'].sum().plot(kind='line', color='green')
+ax.set_ylabel('Amount Spent')
+```
+
+
+
+
+    Text(0, 0.5, 'Amount Spent')
+
+
+
+
+![png](plots/line2.png)
+
+
+Check why the spike in the graph occurs.
+
+
+```python
+cus_f['TotalSum'].max()
+```
+
+
+
+
+    168469.6
+
+
+
+
+```python
+cus_f[cus_f['TotalSum'] == 168469.6]
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>InvoiceNo</th>
+      <th>StockCode</th>
+      <th>Description</th>
+      <th>Quantity</th>
+      <th>InvoiceDate</th>
+      <th>UnitPrice</th>
+      <th>CustomerID</th>
+      <th>InvoiceDay</th>
+      <th>TotalSum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>540421</th>
+      <td>581483</td>
+      <td>23843</td>
+      <td>PAPER CRAFT , LITTLE BIRDIE</td>
+      <td>80995</td>
+      <td>2011-12-09 09:15:00</td>
+      <td>2.08</td>
+      <td>16446</td>
+      <td>2011-12-09</td>
+      <td>168469.6</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
 
 ## Recency, Frequency, Monetary (RFM)
 
@@ -303,6 +393,7 @@ Calculate RFM values for each customer.
 
 
 ```python
+ref_date = max(cus_f.InvoiceDay) + dt.timedelta(1)
 rfm = cus_f.groupby('CustomerID').agg({
      'InvoiceNo':'count',
      'TotalSum':'sum',
@@ -535,35 +626,35 @@ rfm_log.head()
       <td>5.786897</td>
       <td>0.000000</td>
       <td>11.253942</td>
-      <td>2</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>12747</th>
       <td>1.098612</td>
       <td>4.564348</td>
       <td>8.252563</td>
-      <td>0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>12748</th>
       <td>0.000000</td>
       <td>8.306719</td>
       <td>10.318949</td>
-      <td>0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>12749</th>
       <td>1.386294</td>
       <td>5.293305</td>
       <td>8.316515</td>
-      <td>0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>12820</th>
       <td>1.386294</td>
       <td>4.077537</td>
       <td>6.848366</td>
-      <td>0</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
@@ -625,9 +716,9 @@ centroids_log
   <tbody>
     <tr>
       <th>0</th>
-      <td>2.064102</td>
-      <td>5.082637</td>
-      <td>7.948802</td>
+      <td>3.822030</td>
+      <td>3.949997</td>
+      <td>6.695534</td>
     </tr>
     <tr>
       <th>1</th>
@@ -637,9 +728,9 @@ centroids_log
     </tr>
     <tr>
       <th>2</th>
-      <td>3.822030</td>
-      <td>3.949997</td>
-      <td>6.695534</td>
+      <td>2.064102</td>
+      <td>5.082637</td>
+      <td>7.948802</td>
     </tr>
   </tbody>
 </table>
@@ -684,9 +775,9 @@ centroids_orig
   <tbody>
     <tr>
       <th>0</th>
-      <td>7.878</td>
-      <td>161.199</td>
-      <td>2832.180</td>
+      <td>45.697</td>
+      <td>51.935</td>
+      <td>808.786</td>
     </tr>
     <tr>
       <th>1</th>
@@ -696,9 +787,9 @@ centroids_orig
     </tr>
     <tr>
       <th>2</th>
-      <td>45.697</td>
-      <td>51.935</td>
-      <td>808.786</td>
+      <td>7.878</td>
+      <td>161.199</td>
+      <td>2832.180</td>
     </tr>
   </tbody>
 </table>
@@ -880,34 +971,34 @@ large_customers
   </thead>
   <tbody>
     <tr>
-      <th>12747</th>
-      <td>3</td>
-      <td>96</td>
-      <td>3837.45</td>
-    </tr>
-    <tr>
-      <th>12748</th>
+      <th>12346</th>
+      <td>326</td>
       <td>1</td>
-      <td>4051</td>
-      <td>30301.40</td>
+      <td>77183.60</td>
     </tr>
     <tr>
-      <th>12749</th>
-      <td>4</td>
-      <td>199</td>
-      <td>4090.88</td>
+      <th>12822</th>
+      <td>71</td>
+      <td>46</td>
+      <td>948.88</td>
     </tr>
     <tr>
-      <th>12820</th>
-      <td>4</td>
-      <td>59</td>
-      <td>942.34</td>
+      <th>12824</th>
+      <td>60</td>
+      <td>25</td>
+      <td>397.12</td>
     </tr>
     <tr>
-      <th>12826</th>
-      <td>3</td>
-      <td>82</td>
-      <td>1319.72</td>
+      <th>12827</th>
+      <td>6</td>
+      <td>25</td>
+      <td>430.15</td>
+    </tr>
+    <tr>
+      <th>12830</th>
+      <td>38</td>
+      <td>38</td>
+      <td>6814.64</td>
     </tr>
     <tr>
       <th>...</th>
@@ -916,38 +1007,38 @@ large_customers
       <td>...</td>
     </tr>
     <tr>
-      <th>18237</th>
-      <td>3</td>
+      <th>18260</th>
+      <td>173</td>
+      <td>134</td>
+      <td>2643.20</td>
+    </tr>
+    <tr>
+      <th>18261</th>
+      <td>44</td>
+      <td>21</td>
+      <td>324.24</td>
+    </tr>
+    <tr>
+      <th>18263</th>
+      <td>26</td>
       <td>61</td>
-      <td>987.10</td>
+      <td>1213.16</td>
     </tr>
     <tr>
-      <th>18241</th>
-      <td>10</td>
-      <td>104</td>
-      <td>2073.09</td>
+      <th>18265</th>
+      <td>73</td>
+      <td>46</td>
+      <td>801.51</td>
     </tr>
     <tr>
-      <th>18245</th>
-      <td>8</td>
-      <td>175</td>
-      <td>2567.06</td>
-    </tr>
-    <tr>
-      <th>18272</th>
-      <td>3</td>
-      <td>166</td>
-      <td>3078.58</td>
-    </tr>
-    <tr>
-      <th>18283</th>
-      <td>4</td>
-      <td>756</td>
-      <td>2094.88</td>
+      <th>18287</th>
+      <td>43</td>
+      <td>70</td>
+      <td>1837.28</td>
     </tr>
   </tbody>
 </table>
-<p>875 rows × 3 columns</p>
+<p>1644 rows × 3 columns</p>
 </div>
 
 
